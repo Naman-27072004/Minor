@@ -80,11 +80,11 @@ const Homepage = () => {
             <div className="m-1 ">
                 <span className="font-bold text-xl flex flex-col items-center">Browse By Category</span>
                 <div className="flex justify-evenly">
-                    <Link to={ '/products' } className="border rounded p-10 cursor-pointer"><CiMobile2 size={ 50 } />Phones</Link>
-                    <Link to={ '/products' } className="border rounded p-10 cursor-pointer"><FiTablet size={ 50 } />Tablets</Link>
-                    <Link to={ '/products' } className="border rounded p-10 cursor-pointer"><HiOutlineComputerDesktop size={ 50 } />Computers</Link>
-                    <Link to={ '/products' } className="border rounded p-10 cursor-pointer"><CiLaptop size={ 50 } />Laptops</Link>
-                    <Link to={ '/products' } className="border rounded p-10 cursor-pointer"><IoWatchOutline size={ 50 } />Watches</Link>
+                <Link to={ '/products/mobile phones' } className="border rounded p-10 cursor-pointer"><CiMobile2 size={ 50 } />Phones</Link>
+                    <Link to={ '/products/Tablets' } className="border rounded p-10 cursor-pointer"><FiTablet size={ 50 } />Tablets</Link>
+                    <Link to={ '/products/Desktop' } className="border rounded p-10 cursor-pointer"><HiOutlineComputerDesktop size={ 50 } />Computers</Link>
+                    <Link to={ '/products/Laptops' } className="border rounded p-10 cursor-pointer"><CiLaptop size={ 50 } />Laptops</Link>
+                    <Link to={ '/products/Smart watches' } className="border rounded p-10 cursor-pointer"><IoWatchOutline size={ 50 } />Watches</Link>
                 </div>
             </div>
             <hr className="border-2 border-orange-500 my-10" />

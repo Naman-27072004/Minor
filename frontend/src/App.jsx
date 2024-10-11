@@ -48,6 +48,7 @@ function App () {
                 <Route path='/error' element={<Error />} />
                 <Route path='/manage' element={<Manage/>}/>
                 <Route path='/prod' element={<Prod/>}/>
+                <Route path='/products/:category' element={<ProtectedRoute><ProductsPage /></ProtectedRoute>} />
             </Routes>
             <Footer />
         </BrowserRouter>
