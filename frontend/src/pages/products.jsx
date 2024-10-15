@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useCart } from '../context/CartContextProvider';
 import { useParams } from 'react-router-dom'; // Import useParams
+import { useNavigate } from 'react-router-dom';
 
 const ProductsPage = () => {
     const { category } = useParams(); // Get the dynamic category from the URL
@@ -15,6 +16,7 @@ const ProductsPage = () => {
         brand: ''
     });
     const { addToCart } = useCart();
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -63,6 +65,10 @@ const ProductsPage = () => {
         });
     };
 
+    const handleclick = () =>{
+        navigate('/prod');
+    }
+
     return (
         <div className="p-6 bg-gray-100 min-h-screen">
             <h1 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
@@ -109,9 +115,9 @@ const ProductsPage = () => {
             </div>
 
             {Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" onClick={handleclick}>
                     {filteredProducts.map(product => (
-                        <div key={product._id} className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div key={product._id} className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" >
                             <img src={product.image} alt={product.name} className="w-full h-48 object-contain rounded-t-lg mb-4" />
                             <h2 className="text-xl font-semibold text-gray-800 mb-2">{product.name}</h2>
                             <p className="text-gray-600 mb-4">{product.description}</p>

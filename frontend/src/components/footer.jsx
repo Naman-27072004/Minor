@@ -33,7 +33,7 @@ const Footer = () => {
                 </div>
                 <div className='flex flex-col gap-1 m-1 p-1'>
                     <span className='font-bold text-lg'>Account</span>
-                    <span><Link to="/account">My Account</Link></span>
+                    <span><Link to="/manage">My Account</Link></span>
                     <span><Link to="/login">Login</Link> / <Link to="/sign_up">Register</Link></span>
                     <span><Link to={'/products'}>Shop</Link></span>
                 </div>
