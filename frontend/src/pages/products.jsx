@@ -115,10 +115,10 @@ const ProductsPage = () => {
             </div>
 
             {Array.isArray(filteredProducts) && filteredProducts.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" onClick={handleclick}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {filteredProducts.map(product => (
                         <div key={product._id} className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" >
-                            <img src={product.image} alt={product.name} className="w-full h-48 object-contain rounded-t-lg mb-4" />
+                            <img src={product.image} alt={product.name} className="w-full h-48 object-contain rounded-t-lg mb-4" onClick={handleclick}/>
                             <h2 className="text-xl font-semibold text-gray-800 mb-2">{product.name}</h2>
                             <p className="text-gray-600 mb-4">{product.description}</p>
                             <div className="flex justify-between items-center">

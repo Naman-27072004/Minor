@@ -51,14 +51,14 @@ const Homepage = () => {
             <div className="m-1 flex flex-col gap-4 items-center">
                 <span className="font-bold text-3xl">Fresh Sales</span>
                 <Link to="/products">
-                    <button className="bg-orange-500 rounded text-white p-1">View All Products</button>
+                    <button className="bg-orange-500 text-white rounded-full px-4 py-2 shadow-md hover:bg-orange-600 transition-colors duration-300">View All Products</button>
                 </Link>
 
             </div>
             <div className="flex gap-4 max-w-full  overflow-hidden overflow-x-auto mb-10">
                 {products && products.slice( 0, 6 ).map( product => (
-                    <div key={ product._id } className="bg-white min-w-[15rem] min-h-[20rem] p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" onClick={handleclick}>
-                        <img src={ product.image } alt={ product.name } className="w-full h-32 object-contain rounded-t-lg mb-4" />
+                    <div key={ product._id } className="bg-white min-w-[15rem] min-h-[20rem] p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" >
+                        <img src={ product.image } alt={ product.name } className="w-full h-32 object-contain rounded-t-lg mb-4" onClick={handleclick}/>
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">{ product.name }</h2>
                         <p className="text-gray-600 mb-4 truncate">{ product.description }</p>
                         <div className="flex justify-between items-center">
@@ -91,12 +91,12 @@ const Homepage = () => {
             {/* Best Selling Products */ }
             <div className="m-1 flex flex-col gap-4 items-center">
                 <span className="font-bold text-3xl">Best Selling Products</span>
-                <button className="bg-orange-500 rounded text-white p-1"><Link to={ '/products' }>View All</Link></button>
+                <button className="bg-orange-500 text-white rounded-full px-4 py-2 shadow-md hover:bg-orange-600 transition-colors duration-300"><Link to={ '/products' }>View All</Link></button>
             </div>
             <div className="flex gap-4 max-w-full  overflow-hidden overflow-x-auto mb-10">
                 {products && products.slice( 6, 12 ).map( product => (
                     <div key={ product._id } className="bg-white min-w-[15rem] min-h-[20rem] p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" onClick={handleclick}>
-                        <img src={ product.image } alt={ product.name } className="w-full h-32 object-contain rounded-t-lg mb-4" />
+                        <img src={ product.image } alt={ product.name } className="w-full h-32 object-contain rounded-t-lg mb-4" onClick={handleclick}/>
                         <h2 className="text-xl font-semibold text-gray-800 mb-2">{ product.name }</h2>
                         <p className="text-gray-600 mb-4 truncate">{ product.description }</p>
                         <div className="flex justify-between items-center">
@@ -118,14 +118,14 @@ const Homepage = () => {
             <div className="m-1 flex flex-col gap-4 items-center">
                 <span className="font-bold text-3xl">Explore Our Products</span>
                 <Link to="/products">
-                    <button className="bg-orange-500 rounded text-white p-1">View All Products</button>
+                    <button className="bg-orange-500 text-white rounded-full px-4 py-2 shadow-md hover:bg-orange-600 transition-colors duration-300">View All Products</button>
                 </Link>
             </div>
             <div className="flex gap-4 w-full max-h-[30rem] mb-10">
                 <div className="w-1/2 flex flex-col gap-4">
                     {products && products.slice( 7, 9 ).map( product => (
                         <div key={ product?._id } className="flex justify-between bg-white w-full h-fit p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300" onClick={handleclick}>
-                            <img src={ product?.image } alt={ product?.name } className="w-1/2 h-48 object-contain rounded-t-lg " />
+                            <img src={ product?.image } alt={ product?.name } className="w-1/2 h-48 object-contain rounded-t-lg " onClick={handleclick}/>
                             <div className="flex flex-col w-1/2 mx-8">
                                 <h2 className="text-xl font-semibold text-gray-800 mb-2">{ product?.name }</h2>
                                 <p className="text-gray-600 mb-4 truncate">{ product?.description }</p>
@@ -146,7 +146,7 @@ const Homepage = () => {
                     ) ) }
                 </div>
                 { products[ 2 ] && (
-                    <div key={ products[ 2 ]._id } className="relative bg-white w-1/2 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-l-md">
+                    <div key={ products[ 2 ]._id } className="relative bg-white w-1/2 p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 rounded-l-md" onClick={handleclick}>
                         <img src={ products[ 2 ]?.image } alt={ products[ 2 ]?.name } className=" w-full h-full max-h-[25rem] object-contain rounded-t-lg mb-4" />
                         <div className="absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center bg-gray-700/40 py-4">
                             <h2 className="text-xl font-bold text-red-500 mb-2">{ products[ 2 ]?.name }</h2>
