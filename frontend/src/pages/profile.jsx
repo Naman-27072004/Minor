@@ -1,14 +1,14 @@
 import ritik from "/assets/ritik.jpg";
 const Profile = () => {
   return (
-    <div className="max-w-4xl mx-auto p-8 w-full">
+    <div className="max-w-4xl mx-auto p-8 w-full -mt-10">
       <div className="bg-white shadow-lg rounded-lg p-6">
         <h2 className="text-3xl font-bold mb-6 text-red-600">Profile</h2>
 
         {/* Profile Picture and Info Section */}
         <div className="flex items-center space-x-8 mb-6">
           {/* Profile Picture */}
-          <div className="relative">
+          <div className="">
             <img className="rounded-full w-44 h-47" src={ritik} alt="Avatar" />
             <p className="text-red-500 text-sm mt-6 text-center mt-">
               Change Profile Picture
@@ -59,7 +59,7 @@ const Profile = () => {
                 {" "}
                 Mobile Number{" "}
               </label>
-              <div className="relative">
+              <div className="">
                 <input
                   type="tel"
                   id="mobile"
@@ -73,7 +73,7 @@ const Profile = () => {
         <div className="mt-8 pl-44">
           <h3 className="text-xl font-semibold text-red-600">Location</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-            
+
             <div>
               <label
                 htmlFor="state"

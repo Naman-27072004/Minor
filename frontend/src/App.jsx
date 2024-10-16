@@ -21,6 +21,7 @@ import CartPage from './pages/CartPage';
 import ProtectedRoute from './configs/ProtectedRoute';
 import Manage from './pages/manage';
 import Prod from './pages/prod';
+import { Order_details } from './pages/order_details';
 
 function App () {
     return (
@@ -48,6 +49,7 @@ function App () {
                 <Route path='/error' element={<Error />} />
                 <Route path='/manage' element={<Manage/>}/>
                 <Route path='/prod' element={<Prod/>}/>
+                <Route path='/order_details' element={<Order_details/>}/>
                 <Route path='/products/:category' element={<ProtectedRoute><ProductsPage /></ProtectedRoute>} />
             </Routes>
             <Footer />
