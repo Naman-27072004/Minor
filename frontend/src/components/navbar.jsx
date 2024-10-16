@@ -68,7 +68,7 @@ const Navbar = () => {
                             <CiShoppingCart size={ 25 } />
                             <div className='absolute -top-3 -right-2 rounded-full flex items-center justify-center h-4 w-4 bg-red-500 text-white'>{ cart?.items?.length || 0 }</div>
                         </div>
-                        <Link to="/account" className="hover:text-red-500 transition ease-in-out duration-300 transform hover:scale-110">
+                        <Link to="/manage" className="hover:text-red-500 transition ease-in-out duration-300 transform hover:scale-110">
                             <FaUserCircle size={ 25 } />
                         </Link>
                         { user ? (

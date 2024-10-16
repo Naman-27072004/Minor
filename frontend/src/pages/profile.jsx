@@ -73,21 +73,7 @@ const Profile = () => {
         <div className="mt-8 pl-44">
           <h3 className="text-xl font-semibold text-red-600">Location</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-            <div>
-              <label
-                htmlFor="country"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Country
-              </label>
-              <select
-                id="country"
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
-              >
-                <option>India</option>
-                {/* Add more countries if needed */}
-              </select>
-            </div>
+            
             <div>
               <label
                 htmlFor="state"
