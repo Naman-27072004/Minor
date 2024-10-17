@@ -1,12 +1,21 @@
 import { Link } from 'react-router-dom';
 const Error = () => {
-  return (
-    <div className="flex flex-col items-left justify-center min-h-screen -mt-32 ml-40">
-        <div className="font-bold text-5xl">404 Not Found</div>
-        <div>Your visited page not found. You may go home page.</div>
-        <span><button className="bg-orange-500 rounded text-white p-1 m-1"><Link to="/">Back to home page</Link></button></span>
-    </div>
-  )
+    return (
+        <div className="min-h-screen bg-white px-32">
+            <div className=" text-black text-center pt-48">
+                <h1 className=" text-9xl">404</h1>
+                <div className=" text-xl">Page not found.</div>
+                <div className=" mt-8 text-lg">
+                    <p>Oops! It seems like the page you&rsquo;re trying to access doesn&rsquo;t exist.</p>
+                    <p>If you believe there&rsquo;s an issue, feel free to report it, and we&rsquo;ll look into it.</p>
+                </div>
+                <div className=" mt-8">
+                    <Link to='/' className="mt-6 px-2 py-2 mx-4 border text-white border-orange-500 dark:bg-orange-700 rounded-lg">Return Home</Link>
+                    <Link to='/contact' className="mt-6 px-2 py-2 border border-orange-500 rounded-lg cursor-pointer">Report problem</Link>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Error

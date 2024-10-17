@@ -22,6 +22,7 @@ import ProtectedRoute from './configs/ProtectedRoute';
 import Manage from './pages/manage';
 import Prod from './pages/prod';
 import { Order_details } from './pages/order_details';
+import AdminLayout from './pages/admin/AdminLayout';
 
 function App () {
     return (
@@ -46,11 +47,15 @@ function App () {
                 <Route path='/shipping' element={<ProtectedRoute><Shipping /></ProtectedRoute>} />
                 <Route path='/term' element={<ProtectedRoute><Term /></ProtectedRoute>} />
                 <Route path='/faq' element={<ProtectedRoute><Faq /></ProtectedRoute>} />
-                <Route path='/error' element={<Error />} />
                 <Route path='/manage' element={<Manage/>}/>
                 <Route path='/prod' element={<Prod/>}/>
                 <Route path='/order_details' element={<Order_details/>}/>
                 <Route path='/products/:category' element={<ProtectedRoute><ProductsPage /></ProtectedRoute>} />
+                {/* Admin routes */}
+                <Route path="/admin" element={<AdminLayout />} />
+                <Route path="admin/:path" element={<AdminLayout />} />
+                {/*Default route for 404 Error */}
+                <Route path="*" element={<Error />} />
             </Routes>
             <Footer />
         </BrowserRouter>

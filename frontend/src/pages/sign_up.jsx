@@ -8,6 +8,7 @@ const Signup = () => {
     const [formData, setFormData] = useState({
         username: '',
         email: '',
+        phone:'',
         password: ''
     });
 
@@ -34,10 +35,24 @@ const Signup = () => {
         }
         return false; // Password is strong
     };
+    // Function to validate email or phone
+    const isEmailOrPhoneProvided = () => {
+        return formData.email || formData.phone; // Either email or phone must be provided
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+         // Check if email or phone is provided
+        if (!isEmailOrPhoneProvided()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Input Required',
+                text: 'Please provide either an email or a phone number.',
+                confirmButtonText: 'OK'
+            });
+            return;
+        }
         // Check if the password is weak
         if (isWeakPassword(formData.password)) {
             // Show warning alert if the password is weak
@@ -99,11 +114,19 @@ const Signup = () => {
                     <input
                         className="outline-none"
                         type="email"
-                        placeholder="Email or Phone Number"
+                        placeholder="Email"
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
                         required
+                    /><br />
+                    <input
+                        className="outline-none"
+                        type="text"
+                        placeholder="Phone Number"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
                     /><br />
                     <input
                         className="outline-none"

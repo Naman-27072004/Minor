@@ -5,9 +5,11 @@ const jwt = require('jsonwebtoken');
 const getUser = async(req,res) => {
     try {
         // console.log("ok here")
-        const users = await User.findOne();
-        // console.log(products);
-        res.status(200).json(users)
+        const users = await User.find(); 
+        if (!users || users.length === 0) {
+            return res.status(404).json({ message: 'No users found' });
+        }
+        res.status(200).json(users);
     } catch (error) {
         res.status(500).json("internal server error!",error)
     }
@@ -45,7 +47,7 @@ const getUserById = async (req, res) => {
 // Controller function for user signup
 const signup = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { username, email,  phone, password } = req.body;
 
         // Check if the user already exists
         const existingUser = await User.findOne({ email });
@@ -61,6 +63,7 @@ const signup = async (req, res) => {
         const newUser = new User({
             username,
             email,
+            phone,
             password: hashedPassword,
         });
 
@@ -85,7 +88,6 @@ const signup = async (req, res) => {
                 username: savedUser.username,
                 email: savedUser.email,
                 isAdmin: savedUser.isAdmin,
-                isPrime: savedUser.isPrime,
             },
             token,
         });
@@ -168,11 +170,6 @@ const forget = async (req, res) => {
 const updateAccount = async (req, res) => {
     try {
         const { email, address, password, username } = req.body;
-        // console.log(req.body)
-
-        // Hash the password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
 
         // Find the user by email
         const user = await User.findOne({ email });
@@ -181,18 +178,55 @@ const updateAccount = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Update the user's password
-        user.username = username;
-        user.email = email;
-        user.password = hashedPassword;
-        user.address = address;
+        // Only hash the password if it is being updated
+        if (password) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(password, salt);
+        }
+
+        // Update the user's other details
+        user.username = username || user.username;
+        user.address = address || user.address;
+
+        // Ensure email uniqueness if it's being updated
+        if (email && email !== user.email) {
+            const emailExists = await User.findOne({ email });
+            if (emailExists) {
+                return res.status(400).json({ message: 'Email is already taken' });
+            }
+            user.email = email;
+        }
+
+        // Save the updated user
         await user.save();
 
-        res.json({ message: 'Account update successfully', user:user});
+        res.json({ message: 'Account updated successfully', user });
     } catch (error) {
-        res.status(500).json("internal server error!", error)
+        console.error('Error updating account:', error);
+        res.status(500).json({ message: 'Internal server error', error });
     }
-}
+};
+
+
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Check if the user exists
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Delete the user
+        await User.findByIdAndDelete(id);
+
+        return res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        return res.status(500).json({ message: 'Server error' });
+    }
+};
 
 const createContact = async(req,res) => {
     try {
@@ -215,4 +249,4 @@ const createContact = async(req,res) => {
 }
 
 
-module.exports = { signup, login, getUserById, getUser, forget, createContact, updateAccount};
+module.exports = { signup, login, getUserById, getUser, forget, deleteUser, createContact, updateAccount};
