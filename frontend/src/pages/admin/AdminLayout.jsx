@@ -1,12 +1,11 @@
-import {NavLink, useParams} from "react-router-dom"
-import { FaUser, FaRegListAlt, FaHome } from "react-icons/fa";
-import { RiMessage3Fill } from "react-icons/ri";
-// import { useAuth } from "../../store/auth";
+import { NavLink, useParams } from "react-router-dom"
+import { FaUser } from "react-icons/fa";
+import { IoLogOutOutline } from "react-icons/io5";
 // import { useNavigate } from "react-router-dom";
 import AdminUsers from "../../components/admin/AdminUsers";
-import AdminContacts from "../../components/admin/AdminContacts";
+import Products from "../../components/admin/Products";
 import AdminDashboard from "../../components/admin/AdminDashboard";
-import Orders from "../../components/admin/Orders";
+import SaleOrders from "../../components/admin/saleOrders";
 
 const AdminLayout = () => {
     const { path } = useParams();
@@ -23,15 +22,13 @@ const AdminLayout = () => {
     // }
 
     const renderContent = () => {
-        switch (path) {
+        switch ( path ) {
             case 'users':
                 return <AdminUsers />;
-            case 'contacts':
-                return <AdminContacts />;
-            // case 'services':
-            //     return <AdminServices />;
-            case 'orders':
-                return <Orders />;
+            case 'products':
+                return <Products />;
+            case 'saleOrders':
+                return <SaleOrders />;
             default:
                 return <AdminDashboard />
         }
@@ -39,29 +36,45 @@ const AdminLayout = () => {
     return <>
         <div className="text-white text-xl dark:bg-black min-h-screen">
             <div className=" grid grid-cols-5">
-                {/*left*/}
+                {/*left*/ }
                 <div className="min-h-screen border-r-8 border-gray-600">
                     <div className="py-10 px-16 min-w-full border-b-4 border-gray-600 rounded-xl">
                         <NavLink className=' '>
-                            <FaUser className="text-9xl"/><br />
+                            <FaUser className="text-9xl" /><br />
                         </NavLink>
                     </div>
-                    <div className=" mx-16 pt-4 pb-4 text-blue-500">
-                        <NavLink to='/admin' className='mx-2 my-8 flex'><FaHome className="mx-2"/>Home</NavLink>
-                        <NavLink to='/admin/users' element={<AdminUsers /> } className='mx-2 my-8 flex text-center'><FaUser className=" mx-2"/>Users</NavLink>
-                        <NavLink to='/admin/contacts' element={<AdminContacts /> } className='mx-2 my-8 flex'><RiMessage3Fill className="mx-2"/>Contacts</NavLink>
-                        <NavLink to='/admin/orders'  className='mx-2 my-8 flex'><FaRegListAlt className="mx-2"/>Orders</NavLink>
+                    <div className=" mx-16 pt-4 pb-4 text-orange-600 text-2xl">
+                        <NavLink to='/admin' className='mx-2 my-8 flex items-center gap-3'>
+                            <img src="/assets/iconImgs/dashboard.png" className="w-10 h-10" />
+                            Dashboard
+                        </NavLink>
+                        <NavLink to='/admin/users' element={ <AdminUsers /> } className='mx-2 my-8 flex text-center items-center gap-3'> 
+                            <img src="/assets/iconImgs/users.png" className="w-10 h-10 invert" />
+                            Users
+                        </NavLink>
+                        <NavLink to='/admin/products' element={ <Products /> } className='mx-2 my-8 flex items-center gap-3'>
+                            <img src="/assets/iconImgs/productsIcon.png" className="w-10 h-10" />
+                            Products
+                        </NavLink>
+                        <NavLink to='/admin/saleOrders' className='mx-2 my-8 flex items-center gap-3'> 
+                            <img src="/assets/iconImgs/salesOrder.jpg" className="w-10 h-12 invert" />
+                            Sale Orders
+                        </NavLink>
+                        <div className='mx-2 my-8 flex items-center gap-3 cursor-pointer'> 
+                            <IoLogOutOutline size={30} className="ml-2 text-white" />
+                            Logout
+                        </div>
                     </div>
                 </div>
-                {/*Right*/}
+                {/*Right*/ }
                 <div className="col-span-4">
-                    {renderContent()}
+                    { renderContent() }
                 </div>
             </div>
-            
-            
-        </div>        
+
+
+        </div>
     </>;
-    
+
 };
 export default AdminLayout;

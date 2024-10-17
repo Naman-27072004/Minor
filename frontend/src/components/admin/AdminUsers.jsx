@@ -61,7 +61,7 @@ const AdminUsers = () => {
                                 <td className="px-4 py-4">{curr.email}</td>
                                 <td className="px-4 py-4">{curr.phone}</td>
                                 <td className="px-4 py-4">
-                                    <button onClick={() => deleteUser(curr._id)}>Delete</button>
+                                    <button onClick={() => deleteUser(curr._id)} className="bg-orange-600 p-1 rounded-lg hover:border hover:border-orange-600 hover:bg-transparent">Delete</button>
                                 </td>
                             </tr>
                         ))}
