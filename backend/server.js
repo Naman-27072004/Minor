@@ -3,10 +3,11 @@ const app = express();
 const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require("./config/db");
-const fs = require('fs')
-const productRoutes = require('./routes/productRoutes')
-const userRoutes = require ('./routes/userRoutes')
-const cartRoutes = require('./routes/cartRoutes')
+const fs = require('fs');
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require ('./routes/userRoutes');
+const cartRoutes = require('./routes/cartRoutes');
+const orderRoutes = require('./routes/orderAndPaymentRoutes');
 
 //mongodb connection
 connectDB();
@@ -22,9 +23,10 @@ app.use(cors({
 }));
 
 // Routes
-app.use('/api/user',userRoutes)
+app.use('/api/user',userRoutes);
 app.use('/api/products', productRoutes);
-app.use('/api/cart',cartRoutes)
+app.use('/api/cart',cartRoutes);
+app.use('/api/checkout',orderRoutes);
 
 //port
 const PORT = process.env.PORT || 8000;
