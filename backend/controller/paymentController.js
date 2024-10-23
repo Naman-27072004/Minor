@@ -1,26 +1,8 @@
 const Stripe = require('stripe');
 const Payment = require('../models/payment_model');
 const Order = require('../models/order_model');
-const fetch = require('node-fetch');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
-const shortenUrl = async (longUrl) => {
-    try {
-        const response = await fetch(`https://api.shrtco.de/v2/shorten?url=${encodeURIComponent(longUrl)}`, {
-            method: 'GET',
-        });
-        const data = await response.json();
-        if (data.ok) {
-            return data.result.full_short_link;
-        } else {
-            throw new Error('Error shortening URL');
-        }
-    } catch (error) {
-        console.error('Failed to shorten URL:', error);
-        return longUrl;
-    }
-};
 
 const validCountries= [
     'AC', 'AD', 'AE', 'AF', 'AG', 'AI', 'AL', 'AM', 'AO', 'AQ', 'AR', 'AT', 'AU', 'AW', 'AX', 'AZ', 'BA', 'BB', 'BD', 'BE', 'BF', 'BG', 'BH', 'BI', 'BJ', 'BL', 'BM', 'BN', 'BO', 'BQ', 'BR', 'BS', 'BT', 'BV', 'BW', 'BY', 'BZ', 'CA', 'CD', 'CF', 'CG', 'CH', 'CI', 'CK', 'CL', 'CM', 'CN', 'CO', 'CR', 'CV', 'CW', 'CY', 'CZ', 'DE', 'DJ', 'DK', 'DM', 'DO', 'DZ', 'EC', 'EE', 'EG', 'EH', 'ER', 'ES', 'ET', 'FI', 'FJ', 'FK', 'FO', 'FR', 'GA', 'GB', 'GD', 'GE', 'GF', 'GG', 'GH', 'GI', 'GL', 'GM', 'GN', 'GP', 'GQ', 'GR', 'GS', 'GT', 'GU', 'GW', 'GY', 'HK', 'HN', 'HR', 'HT', 'HU', 'ID', 'IE', 'IL', 'IM', 'IN', 'IO', 'IQ', 'IS', 'IT', 'JE', 'JM', 'JO', 'JP', 'KE', 'KG', 'KH', 'KI', 'KM', 'KN', 'KR', 'KW', 'KY', 'KZ', 'LA', 'LB', 'LC', 'LI', 'LK', 'LR', 'LS', 'LT', 'LU', 'LV', 'LY', 'MA', 'MC', 'MD', 'ME', 'MF', 'MG', 'MK', 'ML', 'MM', 'MN', 'MO', 'MQ', 'MR', 'MS', 'MT', 'MU', 'MV', 'MW', 'MX', 'MY', 'MZ', 'NA', 'NC', 'NE', 'NG', 'NI', 'NL', 'NO', 'NP', 'NR', 'NU', 'NZ', 'OM', 'PA', 'PE', 'PF', 'PG', 'PH', 'PK', 'PL', 'PM', 'PN', 'PR', 'PS', 'PT', 'PY', 'QA', 'RE', 'RO', 'RS', 'RU', 'RW', 'SA', 'SB', 'SC', 'SE', 'SG', 'SH', 'SI', 'SJ', 'SK', 'SL', 'SM', 'SN', 'SO', 'SR', 'SS', 'ST', 'SV', 'SX', 'SZ', 'TA', 'TC', 'TD', 'TF', 'TG', 'TH', 'TJ', 'TK', 'TL', 'TM', 'TN', 'TO', 'TR', 'TT', 'TV', 'TW', 'TZ', 'UA', 'UG', 'US', 'UY', 'UZ', 'VA', 'VC', 'VE', 'VG', 'VN', 'VU', 'WF', 'WS', 'XK', 'YE', 'YT', 'ZA', 'ZM', 'ZW', 'ZZ'
@@ -40,7 +22,7 @@ exports.processPayment = async (req, res) => {
         if (!address) throw new Error("Address not provided");
 
         const { country } = address;
-        const currency = "USD";
+        // const currency = "USD";
         const isAddressOutsideUSA = country !== "US";
 
         if (!isValidCountryCode(country)) {
@@ -53,16 +35,13 @@ exports.processPayment = async (req, res) => {
         const line_items = await Promise.all(products.map(async (item) => {
             let imageUrl = item.product.image;
         
-            // If image URL is too long, shorten it using shrtcode API
             if (imageUrl && imageUrl.length > 2048) {
-                console.log("Before url sorted:- ",imageUrl);
-                imageUrl = await shortenUrl(imageUrl) || imageUrl;
-                console.log("Sorted url :- ",imageUrl);
+                throw new Error("Image url size must be less than 2048");
             }
         
             return {
                 price_data: {
-                    currency: 'USD',
+                    currency: currency,
                     product_data: {
                         name: item.product.name,
                         description: item.product.description,
@@ -101,7 +80,7 @@ exports.processPayment = async (req, res) => {
         order.paymentStatus = session.payment_status === 'succeeded' ? 'paid' : 'failed';
         await order.save();
 
-        res.status(200).json({ message: 'Payment processed successfully', newPayment });
+        res.status(200).json({ message: 'Payment processed successfully', newPayment, "session":session });
     } catch (error) {
         if (error.type === 'StripeCardError') {
             res.status(400).json({ message: 'Card error', error });
