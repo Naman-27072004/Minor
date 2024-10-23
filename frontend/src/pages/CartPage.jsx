@@ -49,7 +49,7 @@ const Cart = () => {
                 address: "123 Main St",
                 city: "CityName",
                 postalCode: "12345",
-                country: "US",
+                country: "IN",
             };
 
             const totalAmount = cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0) + 50; // Including shipping
@@ -74,7 +74,7 @@ const Cart = () => {
                     address: address,
                     amount: totalAmount,
                     paymentMethod: "card",
-                    currency: "USD",
+                    currency: "INR",
                 };
                 const response = await fetch(`http://localhost:8000/api/checkout/payment`, {
                     method: "POST",
@@ -90,6 +90,7 @@ const Cart = () => {
                 }
     
                 const sessionData = await response.json();
+                console.log("Session :- ",sessionData.session)
                 const result = await stripe.redirectToCheckout({
                     sessionId: sessionData.session.id,
                 });
@@ -121,9 +122,9 @@ const Cart = () => {
                     <div className="w-full max-h-[38rem] overflow-x-hidden overflow-y-auto md:w-[75%] bg-white p-5 rounded-lg shadow-lg">
                         { cart.items.map( ( item ) => (
                             <div key={ item._id } className="flex items-center justify-between py-5 border-b">
-                                <img src={ item.product.image } alt={ item.product.name } className="w-16 h-16 rounded-md" />
+                                <img src={ item.product?.image } alt={ item.product?.name } className="w-16 h-16 rounded-md" />
                                 <div className="flex-1 ml-4">
-                                    <h2 className="text-lg font-semibold">{ item.product.name }</h2>
+                                    <h2 className="text-lg font-semibold">{ item.product?.name }</h2>
                                     <p className="text-gray-500">{ item.product.description }</p>
                                     <div className="flex items-center space-x-3 mt-2">
                                         <button
@@ -142,7 +143,7 @@ const Cart = () => {
                                     </div>
                                 </div>
                                 <div className="flex flex-col items-end">
-                                    <span className="text-xl font-bold">${ ( item.product.price * item.quantity ).toFixed( 2 ) }</span>
+                                    <span className="text-xl font-bold">₹{ ( item.product?.price * item?.quantity ).toFixed( 2 ) }</span>
                                     <button
                                         onClick={ () => removeFromCart(item._id) }
                                         className="text-red-500 mt-2 border px-2 py-1 rounded-md border-red-500 hover:bg-red-500 hover:text-white"
@@ -160,7 +161,7 @@ const Cart = () => {
                         <div className="mt-4">
                             <div className="flex justify-between">
                                 <span>Subtotal:</span>
-                                <span>${ cart.items.reduce( ( total, item ) => total + item.product.price * item.quantity, 0 ).toFixed( 2 ) }</span>
+                                <span>₹{ cart.items.reduce( ( total, item ) => total + item.product.price * item.quantity, 0 ).toFixed( 2 ) }</span>
                             </div>
                             <div className="flex justify-between mt-2">
                                 <span>Shipping:</span>
